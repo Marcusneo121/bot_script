@@ -1,5 +1,28 @@
 const axios = require("axios");
 
+async function recall_jwt(retryCount = 10) {
+  try {
+    const url =
+      "https://tg-api.grafilab.io/auth/tg/clicker?bot=grafilab&tguserid=5482770289&sign=bb998d1476d5bd1d16adfb151483aeb91b20c56d2a46cd93e7881641e33e25bb";
+    const response = await axios.get(url);
+
+    const url_data = response.request.path;
+    const start = url_data.indexOf("jwt=") + 4;
+    const end = url_data.indexOf("&version");
+    const jwt = url_data.substring(start, end);
+
+    return jwt;
+  } catch (error) {
+    console.log("Error recalling jwt, will retry again");
+    if (retryCount > 0) {
+      return recall_jwt(retryCount - 1);
+    } else {
+      console.log("Failed to recall JWT after multiple attempts");
+      return;
+    }
+  }
+}
+
 async function callApiRecursively(
   url,
   data,
@@ -88,8 +111,23 @@ async function callApiRecursively(
         );
       }, 300000); // 5-minutes cooldown
     } else if (error.response && error.response.status === 403) {
-      console.error("Received status 403 Token Invalid. Hard Stop....");
-      return;
+      console.error(
+        "Received status 403 Token Invalid. New Token Recalling will be initiated in 3 mins..."
+      );
+
+      setTimeout(async () => {
+        console.log("Cooldown complete. Resuming API calls for New Token...");
+        const new_token = await recall_jwt();
+        console.log("New TOKEN : ", new_token);
+        callApiRecursively(
+          url,
+          data,
+          delay,
+          delayBetweenRetries,
+          retries - 1,
+          new_token
+        );
+      }, delayBetweenRetries); // 3-minute cooldown
     } else {
       // Log other errors and continue without cooldown
       console.error("Error calling API:", error.message);
@@ -108,12 +146,19 @@ async function callApiRecursively(
 }
 
 // Example usage
-const apiUrl = "https://tg-api.grafilab.io/power/main"; // Replace with your API URL
+// const apiUrl = "https://tg-api.grafilab.io/power/main";
+// const postData = {
+//   tap_count: 1,
+//   timestamp: 17231876554,
+//   signature: "83bb8fe01664750af40bd23e29b6e83375fe1797aee5729dd0915ae911873422",
+// };
+const apiUrl = "https://tg-api.grafilab.io/power/task";
 const postData = {
   tap_count: 1,
+  task_id: 1,
   timestamp: 17231876554,
   signature: "83bb8fe01664750af40bd23e29b6e83375fe1797aee5729dd0915ae911873422",
-}; // Replace with the data you need to send in the POST request
+};
 const delayBetweenRetries = 180000; // 3mins delay
 const delayBetweenCalls = 500; // 500ms delay
 const numberOfRetries = 10; // Number of recursive calls
