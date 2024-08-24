@@ -148,19 +148,19 @@ async function callApiRecursively(
 // Example usage
 // const apiUrl = "https://tg-api.grafilab.io/power/main";
 // const postData = {
-//   tap_count: 1,
+//   tap_count: 5,
 //   timestamp: 17231876554,
 //   signature: "83bb8fe01664750af40bd23e29b6e83375fe1797aee5729dd0915ae911873422",
 // };
 const apiUrl = "https://tg-api.grafilab.io/power/task";
 const postData = {
-  tap_count: 1,
+  tap_count: 5,
   task_id: 1,
   timestamp: 17231876554,
   signature: "83bb8fe01664750af40bd23e29b6e83375fe1797aee5729dd0915ae911873422",
 };
 const delayBetweenRetries = 180000; // 3mins delay
-const delayBetweenCalls = 500; // 500ms delay
+const delayBetweenCalls = 800; // 500ms delay
 const numberOfRetries = 10; // Number of recursive calls
 const bearerToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk2NTkxNTksImlkIjoyNjksImhhc2giOiI0YTQ0YWE1YmFjOTM1YzZhMjVkMzUxNDhmMzFjNDQ0YTE1ZThiMjRlZWJjNTU3NzdiMzVlZmI3Zjg4ZjUzZGM4NGMwNDFlMWRjMzJiZWJkZDI1YzYwMDE0MGE5MjdjYWYzMzMxMTg3MmFjMGFlZTI2MjRjM2FmNzJiZmYxNTE3NyIsImxvZ2luX3R5cGUiOiJ1c2VyX3RlbGVncmFtX2xvZ2luIiwiYWNjZXNzX3Rva2VuIjoiZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBaQ0k2TWpZNUxDSm9ZWE5vSWpvaU5HRTBOR0ZoTldKaFl6a3pOV00yWVRJMVpETTFNVFE0WmpNeFl6UTBOR0V4TldVNFlqSTBaV1ZpWXpVMU56YzNZak0xWldaaU4yWTRPR1kxTTJSak9EUmpNRFF4WlRGa1l6TXlZbVZpWkdReU5XTTJNREF4TkRCaE9USTNZMkZtTXpNek1URTROekpoWXpCaFpXVXlOakkwWXpOaFpqY3lZbVptTVRVeE56Y2lMQ0p5WVc1a2IyMXBlbVZrYUdWNElqb2labUpqTkRCaVpqZzNNV1F3WldReE5EUmtNV1JqTkRFNFlXSmlZekF4WmpFek9XVmtPV1JpTlRNeE1HWTBNamN3TkRGaU1XTmxaRFptTXpGa05UUXdPRFpoTTJSbU4ySm1NR015TXpsak5tWm1NbUppWkdKaFlXTXlOalpqTkRZME56RmxPVFkwWmpsbU5XRmxZVEExTUdSaU1EWmtNMlJrTkRSbE1tRTJZVEVpTENKcFlYUWlPakUzTWpRME56VXhOVGw5Li16ZWhIc0lYWUJqMmxJVTQtSnVrSnRQWklmSGdBMjRhajdvSWZVYnB0VDQiLCJncHVfc2VsZWN0ZWQiOiJOVklESUEiLCJpYXQiOjE3MjQ0NzUxNTl9.IIiBPrUjOdN20zpeuAJAi6fjgrOAawFXZgtAp3B6kX0"; // Replace with your actual Bearer token
